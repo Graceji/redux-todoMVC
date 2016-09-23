@@ -1,16 +1,17 @@
-import 'babel-polyfill';
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './reducers';
 import App from './containers/App';
-import configureStore from './store/configureStore';
-import 'todomvc-app-css/index.css';
 
-const store = configureStore();
+const initialState = rootReducer(undefined, { type:null });
+const preloadState = Object.assign({}, initialState);
+const store = createStore(rootReducer, preloadState);
 
 render(
-  <Provider store = {store}>
+  <Provider store={store}>
     <App />
-  </Provider>,
-  document.getElementById('root')
-)
+  </Provider>, 
+  document.getElementById('app')
+);
